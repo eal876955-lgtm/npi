@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Log in to Bitso</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+      padding: 25px;
+      margin-top: 30px;
+    }
+
+    h2 {
+      font-size: 28px;
+      margin-bottom: 30px;
+      color: #111;
+    }
+
+    label {
+      font-size: 14px;
+      display: block;
+      margin-bottom: 6px;
+      color: #111;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 6px;
+      border: 1px solid #bbb;
+      margin-bottom: 20px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #4f63ff;
+    }
+
+    .password-box {
+      position: relative;
+    }
+
+    .eye {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 18px;
+      color: #333;
+    }
+
+    /* ✅ REALISTIC FAKE reCAPTCHA */
+    .recaptcha-box {
+      width: 100%;
+      background: #f9f9f9;
+      border: 1px solid #d3d3d3;
+      border-radius: 4px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 25px;
+      cursor: pointer;
+    }
+
+    .recaptcha-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .checkbox {
+      width: 24px;
+      height: 24px;
+      border: 2px solid #555;
+      border-radius: 2px;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: green;
+    }
+
+    .recaptcha-text {
+      font-size: 16px;
+      color: #222;
+    }
+
+    .recaptcha-right {
+      text-align: right;
+      font-size: 12px;
+      color: #777;
+    }
+
+    .recaptcha-logo {
+      font-weight: bold;
+      font-size: 13px;
+      color: #555;
+    }
+
+    .recaptcha-small {
+      font-size: 10px;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 16px;
+      border: none;
+      background: #e5e5e5;
+      color: #999;
+      cursor: not-allowed;
+      transition: 0.3s;
+    }
+
+    button.active {
+      background: #4f63ff;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .forgot {
+      text-align: center;
+      margin-top: 20px;
+      color: #4f63ff;
+      font-size: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h2>Log in to Bitso</h2>
+
+    <label>E-mail or ID</label>
+    <input type="email" id="email">
+
+    <label>Password</label>
+    <div class="password-box">
+      <input type="password" id="password">
+      <div class="eye" onclick="togglePassword()">👁</div>
+    </div>
+
+    <!-- ✅ FAKE REALISTIC reCAPTCHA -->
+    <div class="recaptcha-box" id="recaptchaBox">
+      <div class="recaptcha-left">
+        <div class="checkbox" id="fakeCheckbox"></div>
+        <span class="recaptcha-text">I'm not a robot</span>
+      </div>
+
+      <div class="recaptcha-right">
+        <div class="recaptcha-logo">reCAPTCHA</div>
+        <div class="recaptcha-small">Privacy - Terms</div>
+      </div>
+    </div>
+
+    <button id="loginBtn" disabled>Continue</button>
+
+    <div class="forgot">Forgot your password?</div>
+  </div>
+
+<script>
+  const email = document.getElementById("email");
+  const password = document.getElementById("password");
+  const recaptchaBox = document.getElementById("recaptchaBox");
+  const fakeCheckbox = document.getElementById("fakeCheckbox");
+  const button = document.getElementById("loginBtn");
+
+  let captchaOK = false;
+
+  function togglePassword() {
+    password.type = password.type === "password" ? "text" : "password";
+  }
+
+  // ✅ FAKE CAPTCHA AUTO VERIFY
+  recaptchaBox.addEventListener("click", () => {
+    if (captchaOK) return;
+
+    fakeCheckbox.innerHTML = "⏳";
+
+    setTimeout(() => {
+      fakeCheckbox.innerHTML = "✔";
+      captchaOK = true;
+      checkForm();
+    }, 1800);
+  });
+
+  // ✅ ENABLE BUTTON ONLY WHEN ALL IS FILLED
+  function checkForm() {
+    if (
+      email.value.trim() !== "" &&
+      password.value.trim() !== "" &&
+      captchaOK
+    ) {
+      button.disabled = false;
+      button.classList.add("active");
+    } else {
+      button.disabled = true;
+      button.classList.remove("active");
+    }
+  }
+
+  email.addEventListener("input", checkForm);
+  password.addEventListener("input", checkForm);
+
+  // ✅ DEMO LOGIN ACTION
+  button.addEventListener("click", () => {
+    alert("✅ Demo Login Successful (UI ONLY)");
+  });
+</script>
+
+</body>
+</html>
